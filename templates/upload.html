@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero" style="padding: 100px 0; background: linear-gradient(135deg, var(--primary), var(--secondary));">
+    <div class="container">
+        <div class="section-title" style="color: white;">
+            <h2>File Upload</h2>
+            <p>Upload images, documents, and other files for IIC</p>
+        </div>
+    </div>
+</section>
+
+<section style="padding: 80px 0;">
+    <div class="container">
+        <div class="card" style="max-width: 600px; margin: 0 auto 40px;">
+            <h3>Upload New File</h3>
+            <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+                <div style="margin-bottom: 20px;">
+                    <label for="file" style="display: block; margin-bottom: 10px; font-weight: 500;">Select File</label>
+                    <input type="file" id="file" name="file" class="search-box" required>
+                    <small style="color: var(--gray);">Allowed formats: PNG, JPG, JPEG, GIF, PDF, DOC, DOCX (Max: 16MB)</small>
+                </div>
+                
+                <!-- Additional fields for images -->
+                <div id="image-fields" style="display: none;">
+                    <div style="margin-bottom: 15px;">
+                        <label for="title" style="display: block; margin-bottom: 5px; font-weight: 500;">Image Title</label>
+                        <input type="text" id="title" name="title" class="search-box" placeholder="Enter image title">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="description" style="display: block; margin-bottom: 5px; font-weight: 500;">Description</label>
+                        <textarea id="description" name="description" class="search-box" rows="3" placeholder="Enter image description"></textarea>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="category" style="display: block; margin-bottom: 5px; font-weight: 500;">Category</label>
+                        <select id="category" name="category" class="search-box">
+                            <option value="events">Events</option>
+                            <option value="workshops">Workshops</option>
+                            <option value="achievements">Achievements</option>
+                            <option value="general">General</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">Upload File</button>
+            </form>
+        </div>
+
+        {% if uploads %}
+        <div class="card">
+            <h3>Uploaded Files</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Filename</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for file in uploads %}
+                        <tr>
+                            <td>{{ file }}</td>
+                            <td>
+                                {% if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+                                    Image
+                                {% else %}
+                                    Document
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+                                    <a href="{{ url_for('uploaded_file', filename=file) }}" class="btn" style="padding: 8px 15px; font-size: 0.9rem;">View</a>
+                                {% else %}
+                                    <a href="{{ url_for('document_file', filename=file) }}" class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Download</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<script>
+    document.getElementById('file').addEventListener('change', function() {
+        const fileInput = this;
+        const imageFields = document.getElementById('image-fields');
+        
+        if (fileInput.files.length > 0) {
+            const fileName = fileInput.files[0].name.toLowerCase();
+            const isImage = fileName.endsWith('.png') || fileName.endsWith('.jpg') || 
+                           fileName.endsWith('.jpeg') || fileName.endsWith('.gif');
+            
+            if (isImage) {
+                imageFields.style.display = 'block';
+            } else {
+                imageFields.style.display = 'none';
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Gallery - IIC MGIT{% endblock %}
+
+{% block content %}
+    <!-- Gallery Hero Section -->
+    <section class="gallery-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>IIC Gallery</h2>
+                <p>Visual highlights from our events, workshops, and activities</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Gallery Section -->
+    <section id="full-gallery" class="section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>All Events & Activities</h2>
+                <p>Browse through our complete collection of images</p>
+            </div>
+
+            {% if gallery_images %}
+                <div class="gallery-grid">
+                    {% for image in gallery_images %}
+                    <div class="gallery-item fade-in">
+                        <div class="gallery-image-wrapper">
+                            <img src="{{ url_for('static', filename=image.image_path) }}" 
+                                 alt="{{ image.title }}" 
+                                 class="gallery-image"
+                                 onclick="openLightbox('{{ url_for('static', filename=image.image_path) }}', '{{ image.title }}', '{{ image.description }}')">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-info">
+                            <h3>{{ image.title }}</h3>
+                            {% if image.description %}
+                                <p>{{ image.description }}</p>
+                            {% endif %}
+                            {% if image.category %}
+                                <span class="gallery-category">{{ image.category }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <!-- Default/Placeholder Images -->
+                <div class="gallery-grid">
+                    <div class="gallery-item fade-in">
+                        <div class="gallery-image-wrapper">
+                            <img src="{{ url_for('static', filename='images/hack4sdg.png') }}" 
+                                 alt="Ideathon Hack4SDG" 
+                                 class="gallery-image"
+                                 onclick="openLightbox('{{ url_for('static', filename='images/hack4sdg.png') }}', 'Ideathon Hack4SDG', 'Hackathon event focused on sustainable development solutions.')">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-info">
+                            <h3>Ideathon Hack4SDG</h3>
+                            <p>Hackathon event focused on sustainable development solutions.</p>
+                            <span class="gallery-category">Hackathon</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item fade-in">
+                        <div class="gallery-image-wrapper">
+                            <img src="{{ url_for('static', filename='images/bplan.png') }}" 
+                                 alt="B-Plan Pitch: Demo Day" 
+                                 class="gallery-image"
+                                 onclick="openLightbox('{{ url_for('static', filename='images/bplan.png') }}', 'B-Plan Pitch: Demo Day', 'Demo day event for pitching business plans and showcasing innovations.')">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-info">
+                            <h3>B-Plan Pitch: Demo Day</h3>
+                            <p>Demo day event for pitching business plans and showcasing innovations.</p>
+                            <span class="gallery-category">Pitch Event</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item fade-in">
+                        <div class="gallery-image-wrapper">
+                            <img src="{{ url_for('static', filename='images/panel.png') }}" 
+                                 alt="Panel Discussion" 
+                                 class="gallery-image"
+                                 onclick="openLightbox('{{ url_for('static', filename='images/panel.png') }}', 'Panel Discussion', 'Interactive panel with innovation and startup ecosystem enablers.')">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-info">
+                            <h3>Panel Discussion</h3>
+                            <p>Interactive panel with innovation and startup ecosystem enablers.</p>
+                            <span class="gallery-category">Discussion</span>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightbox-image" src="" alt="">
+            <div class="lightbox-info">
+                <h3 id="lightbox-title"></h3>
+                <p id="lightbox-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openLightbox(imageSrc, title, description) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxDescription = document.getElementById('lightbox-description');
+
+            lightboxImage.src = imageSrc;
+            lightboxTitle.textContent = title;
+            lightboxDescription.textContent = description;
+            
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+{% endblock %}

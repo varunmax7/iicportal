@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Institution's Innovation Council (IIC) - MGIT{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header id="main-header">
+        <div class="container">
+            <div class="header-top">
+                <!-- Logo Section - Left Side - WITH X BETWEEN LOGOS -->
+                <div class="logo-section">
+                    <!-- Main IIC Logo -->
+                    <div class="main-logo">
+                        <img src="{{ url_for('static', filename='images/iic.png') }}" alt="IIC Logo" onerror="this.src='https://via.placeholder.com/50x50/0051ff/ffffff?text=IIC'">
+                    </div>
+
+                    <!-- X Separator -->
+                    <div class="x-separator">×</div>
+
+                    <!-- Collaborative Logo -->
+                    <div class="collaborative-logo">
+                        <img src="{{ url_for('static', filename='images/idea.png') }}" alt="Idea Incubator Logo" onerror="this.src='https://via.placeholder.com/45x45/008489/ffffff?text=IDEA'">
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Navigation Section - ALL TITLES VISIBLE -->
+                <div class="nav-section" id="nav-section">
+                    <nav id="main-nav">
+                        <ul>
+                            <li><a href="{{ url_for('index') }}#home" class="nav-link">Home</a></li>
+                            <li><a href="{{ url_for('index') }}#about" class="nav-link">About IIC</a></li>
+                            <li><a href="{{ url_for('index') }}#members" class="nav-link">IIC Members</a></li>
+                            <li><a href="{{ url_for('index') }}#activities" class="nav-link">IIC Activities</a></li>
+                            <li><a href="{{ url_for('index') }}#documents" class="nav-link">Policy Documents</a></li>
+                            <li><a href="{{ url_for('index') }}#gallery" class="nav-link">Gallery</a></li>
+                            <li><a href="{{ url_for('index') }}#testimonials" class="nav-link">Testimonials</a></li>
+                            <li><a href="{{ url_for('index') }}#contact" class="nav-link">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                        <button class="flash-close">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About IIC</h3>
+                    <p>The Institution's Innovation Council (IIC) is a platform established to promote innovation and entrepreneurship among faculty and students.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="{{ url_for('index') }}#home">Home</a></li>
+                        <li><a href="{{ url_for('index') }}#about">About IIC</a></li>
+                        <li><a href="{{ url_for('index') }}#members">IIC Members</a></li>
+                        <li><a href="{{ url_for('index') }}#activities">IIC Activities</a></li>
+                        <li><a href="{{ url_for('upload') }}">Upload Files</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> MGIT Campus, Hyderabad</p>
+                    <p><i class="fas fa-phone"></i> +91 9959827778</p>
+                    <p><i class="fas fa-envelope"></i> kcsabitha_mct@mgit.ac.in</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Institution's Innovation Council. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

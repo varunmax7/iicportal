@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Fostering Innovation & Entrepreneurship</h2>
+                <p>The Institution's Innovation Council (IIC) is a platform established to promote innovation and entrepreneurship among faculty and students.</p>
+                <a href="#about" class="btn">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rating Certificate -->
+    <section id="rating">
+        <div class="container">
+            <div class="rating-certificate zoom-in">
+                <h3>Rating Certificate 2022 – 2023</h3>
+                <p>We are proud to announce that our IIC has achieved an outstanding rating for the academic year 2022-2023.</p>
+                <a href="#" class="btn">View Certificate</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About IIC -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About IIC</h2>
+                <p>Learn about our mission, functions, and the benefits we offer to the innovation ecosystem</p>
+            </div>
+            <div class="cards-container">
+                <div class="card slide-in-left">
+                    <h3>Major Focus Areas</h3>
+                    <ul>
+                        <li>Innovation and Entrepreneurship Development</li>
+                        <li>Incubation and Start-up Promotion</li>
+                        <li>Industry Institute Interaction</li>
+                        <li>Intellectual Property Rights (IPR)</li>
+                        <li>Social Innovation</li>
+                    </ul>
+                </div>
+                <div class="card fade-in">
+                    <h3>Functions of IIC</h3>
+                    <ul>
+                        <li>Promote innovation and entrepreneurship</li>
+                        <li>Encourage creativity and problem-solving</li>
+                        <li>Provide industry-academia interaction platform</li>
+                        <li>Facilitate development of innovative ideas</li>
+                        <li>Create culture of innovation and entrepreneurship</li>
+                    </ul>
+                </div>
+                <div class="card slide-in-right">
+                    <h3>Benefits</h3>
+                    <ul>
+                        <li>Enhanced learning and teaching experience</li>
+                        <li>Improved employability and entrepreneurship skills</li>
+                        <li>Access to funding and incubation support</li>
+                        <li>Collaboration with industry and academia</li>
+                        <li>Recognition for innovative ideas and projects</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- IIC Members -->
+<section id="members" class="section-light">
+    <div class="container">
+        <div class="section-title">
+            <h2>IIC Members</h2>
+            <p>Meet our dedicated team driving innovation forward</p>
+        </div>
+        
+        <div class="search-filter">
+            <input type="text" class="search-box" id="member-search" placeholder="Search members...">
+            <select class="filter-select" id="role-filter">
+                <option value="">All Roles</option>
+                <option value="Head">Head</option>
+                <option value="Co-Head">Co-Head</option>
+                <option value="Secretary">Secretary</option>
+                <option value="Social Media Head">Social Media Head</option>
+                <option value="Developers Head">Developers Head</option>
+                <option value="PR Head">PR Head</option>
+                <option value="Documentation Head">Documentation Head</option>
+                <option value="Outreach Manager">Outreach Manager</option>
+                <option value="Content-Social Manager">Content-Social Manager</option>
+                <option value="DOP">DOP</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Member">Member</option>
+                <option value="Served">Served</option>
+                <option value="Previous Head - Served">Previous Head - Served</option>
+            </select>
+        </div>
+        
+        <div class="table-container">
+            <table id="members-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Branch</th>
+                        <th>Year/Sem</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody id="members-tbody">
+                    <!-- First 5 important members -->
+                    {% for member in initial_members %}
+                    <tr class="member-row initial-member">
+                        <td>{{ member.name }}</td>
+                        <td>{{ member.role }}</td>
+                        <td>{{ member.branch }}</td>
+                        <td>{{ member.year_sem }}</td>
+                        <td><a href="mailto:{{ member.email }}">{{ member.email }}</a></td>
+                    </tr>
+                    {% endfor %}
+                    
+                    <!-- Remaining members hidden by default -->
+                    {% for member in additional_members %}
+                    <tr class="member-row additional-member" style="display: none;">
+                        <td>{{ member.name }}</td>
+                        <td>{{ member.role }}</td>
+                        <td>{{ member.branch }}</td>
+                        <td>{{ member.year_sem }}</td>
+                        <td><a href="mailto:{{ member.email }}">{{ member.email }}</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            {% if additional_members %}
+            <button id="view-more-btn" class="btn">View More Members</button>
+            <button id="view-less-btn" class="btn" style="display: none; background: var(--gray);">View Less Members</button>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+    <!-- IIC Activities -->
+    <section id="activities">
+        <div class="container">
+            <div class="section-title">
+                <h2>IIC Activities</h2>
+                <p>Explore our upcoming and past events, workshops, and initiatives</p>
+            </div>
+            <div class="tabs">
+                <div class="tab active" data-tab="upcoming">Past Events</div>
+                <div class="tab" data-tab="past">Upcoming Events</div>
+            </div>
+            <div class="tab-content active" id="upcoming-content">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Venue</th>
+                                <th>Overview</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for activity in upcoming_activities %}
+                            <tr>
+                                <td>{{ activity.name }}</td>
+                                <td>{{ activity.date }}</td>
+                                <td>{{ activity.venue }}</td>
+                                <td>{{ activity.overview }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-content" id="past-content">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Venue</th>
+                                <th>Overview</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for activity in past_activities %}
+                            <tr>
+                                <td>{{ activity.name }}</td>
+                                <td>{{ activity.date }}</td>
+                                <td>{{ activity.venue }}</td>
+                                <td>{{ activity.overview }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Policy Documents -->
+    <section id="documents" class="section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Policy Documents</h2>
+                <p>Access our official documents, guidelines, and regulations</p>
+            </div>
+            <div class="cards-container">
+                <div class="card slide-in-left">
+                    <h3>IIC Charter</h3>
+                    <p>Official charter outlining the vision, mission, and objectives of the Institution's Innovation Council.</p>
+                    <a href="#" class="btn">Download</a>
+                </div>
+                <div class="card fade-in">
+                    <h3>IIC Guidelines</h3>
+                    <p>Comprehensive guidelines for the functioning and activities of the IIC.</p>
+                    <a href="#" class="btn">Download</a>
+                </div>
+                <div class="card slide-in-right">
+                    <h3>IIC Rules & Regulations</h3>
+                    <p>Official rules and regulations governing the IIC operations and member conduct.</p>
+                    <a href="#" class="btn">Download</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>Gallery</h2>
+                <p>Visual highlights from our events and activities</p>
+            </div>
+            <div class="cards-container">
+                {% for image in gallery_images[:3] %}
+                <div class="card {% if loop.index == 1 %}slide-in-left{% elif loop.index == 3 %}slide-in-right{% else %}fade-in{% endif %}">
+                    <img src="{{ url_for('static', filename=image.image_path) }}" alt="{{ image.title }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                    <h3>{{ image.title }}</h3>
+                    <p>{{ image.description }}</p>
+                </div>
+                {% else %}
+                <div class="card slide-in-left">
+                    <img src="{{ url_for('static', filename='images/hack4sdg.png') }}" alt="Event 1" style="width: 100%; border-radius: 8px; margin-bottom: 15px;">
+                    <h3>Ideathon Hack4SDG</h3>
+                    <p>Hackathon event focused on sustainable development solutions.</p>
+                </div>
+                <div class="card fade-in">
+                    <img src="{{ url_for('static', filename='images/bplan.png') }}" alt="Event 2" style="width: 100%; border-radius: 8px; margin-bottom: 15px;">
+                    <h3>B-Plan Pitch: Demo Day</h3>
+                    <p>Demo day event for pitching business plans and showcasing innovations.</p>
+                </div>
+                <div class="card slide-in-right">
+                    <img src="{{ url_for('static', filename='images/panel.png') }}" alt="Event 3" style="width: 100%; border-radius: 8px; margin-bottom: 15px;">
+                    <h3>Panel Discussion</h3>
+                    <p>Interactive panel with innovation and startup ecosystem enablers.</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="{{ url_for('gallery') }}" class="btn">View Full Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>What People Say</h2>
+                <p>Hear from our participants about their IIC experience</p>
+            </div>
+            
+            <div class="testimonials-container">
+                <div class="testimonials-slider" id="testimonialsSlider">
+                    {% for testimonial in testimonials %}
+                    <div class="testimonial-slide">
+                        <p class="testimonial-text">{{ testimonial.testimonial }}</p>
+                        <div class="testimonial-author">{{ testimonial.name }}</div>
+                        <div class="testimonial-event">{{ testimonial.event }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Navigation Dots -->
+                <div class="testimonials-dots" id="testimonialsDots">
+                    {% for i in range(testimonials|length) %}
+                    <button class="testimonial-dot {% if loop.first %}active{% endif %}" data-index="{{ i }}"></button>
+                    {% endfor %}
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <button class="testimonial-nav testimonial-prev" id="testimonialPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="testimonial-nav testimonial-next" id="testimonialNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our team for any queries or collaborations</p>
+            </div>
+            <div class="contact-cards">
+                {% for contact in contacts %}
+                <div class="contact-card">
+                    <h3>{{ contact.name }}</h3>
+                    <p><strong>{{ contact.role }}</strong></p>
+                    <p><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></p>
+                    <p><a href="tel:{{ contact.phone }}">{{ contact.phone }}</a></p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Form -->
+    <section class="section-light" style="padding: 50px 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Share Your Experience</h2>
+                <p>Submit your testimonial about IIC events</p>
+            </div>
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <form method="POST" action="{{ url_for('add_testimonial') }}">
+                    <div style="margin-bottom: 20px;">
+                        <label for="name" style="display: block; margin-bottom: 5px; font-weight: 500;">Your Name</label>
+                        <input type="text" id="name" name="name" class="search-box" required>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label for="event" style="display: block; margin-bottom: 5px; font-weight: 500;">Event Name</label>
+                        <input type="text" id="event" name="event" class="search-box" required>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label for="testimonial" style="display: block; margin-bottom: 5px; font-weight: 500;">Your Testimonial</label>
+                        <textarea id="testimonial" name="testimonial" class="search-box" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Submit Testimonial</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
